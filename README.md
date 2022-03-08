@@ -1,16 +1,14 @@
-# job_search
+# Job Search App UI
 
-A new Flutter project.
+A flutter implementation of [Job Search App Design](https://dribbble.com/shots/17643069-Job-Search-App) by [Purrweb UI/UX Studio](https://dribbble.com/purrwebui)
 
-## Getting Started
+Get the "app" [here]() (not done yet)
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+![Design](https://cdn.dribbble.com/users/5031392/screenshots/17643069/media/9fd11ea1bc69794da003909195fb526c.png)
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+6.5 inches and 720X1600 pixles|  4 inches and 320X534 pixles
+:----------------------------:|:---------------------------:
+![](larger_screen.gif)        |  ![](smaller_screen.gif)
