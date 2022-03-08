@@ -32,6 +32,7 @@ class CustomAppBar extends StatelessWidget {
             child: Icon(
               Icons.menu,
               size: iconBoxSize * 0.75,
+              color: MyTheme.blackish,
             ),
           ),
           Container(
@@ -55,6 +56,7 @@ class CustomAppBar extends StatelessWidget {
                 Icon(
                   Icons.notifications_none_outlined,
                   size: iconBoxSize * 0.75,
+                  color: MyTheme.blackish,
                 ),
                 Positioned(
                   top: iconBoxSize * 0.2,

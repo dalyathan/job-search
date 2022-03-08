@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:job_search/components/home/search_field.dart';
+import 'package:job_search/icons/slide.dart';
 import 'package:job_search/theme.dart';
 
 class SearchJob extends StatelessWidget {
@@ -11,7 +11,7 @@ class SearchJob extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double searchBarHeight = height * 0.6;
+    double searchBarHeight = height * 0.55;
     double searchContentHeight = searchBarHeight * 0.95;
     return SizedBox(
       width: width,
@@ -26,7 +26,7 @@ class SearchJob extends StatelessWidget {
               fit: BoxFit.fitWidth,
               child: Text(
                 "Find your Dream Job!",
-                style: GoogleFonts.poppins(color: MyTheme.blackish),
+                style: MyTheme.style.copyWith(color: MyTheme.blackish),
               ),
             ),
             // decoration: BoxDecoration(
@@ -45,10 +45,10 @@ class SearchJob extends StatelessWidget {
                   Container(
                     width: searchContentHeight,
                     height: searchContentHeight,
-                    child: Icon(
-                      Icons.door_sliding,
-                      color: Colors.white,
-                      size: searchContentHeight * 0.6,
+                    child: Center(
+                      child: SlideIcon(
+                        size: searchContentHeight * 0.4,
+                      ),
                     ),
                     decoration: BoxDecoration(
                       color: MyTheme.greenish,
@@ -56,7 +56,7 @@ class SearchJob extends StatelessWidget {
                           BorderRadius.circular(searchContentHeight * 0.1),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.grey.withOpacity(0.1),
+                          color: Colors.grey.withOpacity(0.05),
                           spreadRadius: 10,
                           blurRadius: 3,
                           offset: const Offset(0, 0),

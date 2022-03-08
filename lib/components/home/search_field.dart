@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:job_search/theme.dart';
+
+import '../../icons/search.dart';
 
 class SearchField extends StatefulWidget {
   final double width;
@@ -11,8 +14,11 @@ class SearchField extends StatefulWidget {
 }
 
 class _SearchFieldState extends State<SearchField> {
+  bool fieldNotFocused = true;
+  final textEditingController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    var fontSize = widget.height * 0.4;
     return Container(
       width: widget.width,
       height: widget.height,
@@ -21,22 +27,49 @@ class _SearchFieldState extends State<SearchField> {
         child: Stack(
           alignment: Alignment.centerLeft,
           children: [
-            TextField(
-              style: TextStyle(fontSize: widget.height * 0.4),
-              textAlign: TextAlign.left,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(borderSide: BorderSide()),
-                focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.red)),
+            FocusScope(
+              child: Focus(
+                onFocusChange: (focus) => setState(() {
+                  fieldNotFocused = focus ? false : true;
+                }),
+                child: TextField(
+                  controller: textEditingController,
+                  style: TextStyle(fontSize: fontSize),
+                  textAlign: TextAlign.left,
+                  decoration: const InputDecoration(
+                      contentPadding: EdgeInsets.zero,
+                      border: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                      errorBorder: InputBorder.none),
+                ),
               ),
             ),
-            Row(
-              children: const [
-                Icon(
-                  Icons.search,
-                  color: Colors.grey,
+            Visibility(
+              visible:
+                  fieldNotFocused && textEditingController.value.text.isEmpty,
+              child: SizedBox(
+                width: widget.width * 0.35,
+                height: fontSize,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SearchIcon(
+                      size: fontSize * 0.8,
+                    ),
+                    SizedBox(
+                      height: fontSize,
+                      child: FittedBox(
+                          fit: BoxFit.fitHeight,
+                          child: Text(
+                            'Search',
+                            style: MyTheme.style
+                                .copyWith(color: Colors.grey[300]!),
+                          )),
+                    )
+                  ],
                 ),
-              ],
+              ),
             )
           ],
         ),
@@ -46,7 +79,7 @@ class _SearchFieldState extends State<SearchField> {
         color: Colors.white,
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
+            color: Colors.grey.withOpacity(0.05),
             spreadRadius: 10,
             blurRadius: 3,
             offset: const Offset(0, 0),
