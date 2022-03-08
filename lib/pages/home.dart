@@ -21,7 +21,7 @@ class HomePage extends StatelessWidget {
         children: [
           SearchJob(
             width: width,
-            height: size.height * 0.15,
+            height: size.height * 0.135,
           ),
           fixedSpace,
           Reminder(width: width, height: size.height * 0.25),
