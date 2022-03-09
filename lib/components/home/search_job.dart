@@ -11,7 +11,7 @@ class SearchJob extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double searchBarHeight = height * 0.55;
+    double searchBarHeight = height * 0.575;
     double searchContentHeight = searchBarHeight * 0.95;
     return SizedBox(
       width: width,

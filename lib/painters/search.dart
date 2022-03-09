@@ -9,7 +9,7 @@ class SearchIconPainter extends CustomPainter {
     var circleRadius = diagonalLength * 0.8 * 0.5;
     Paint brush = Paint()
       ..style = PaintingStyle.stroke
-      ..color = Colors.grey[300]!
+      ..color = Colors.grey[400]!
       ..strokeWidth = 1.5;
     canvas.drawCircle(Offset(circleRadius, circleRadius), circleRadius, brush);
     canvas.drawLine(Offset(circleRadius * 2, circleRadius * 2),

@@ -64,7 +64,7 @@ class _SearchFieldState extends State<SearchField> {
                           child: Text(
                             'Search',
                             style: MyTheme.style
-                                .copyWith(color: Colors.grey[300]!),
+                                .copyWith(color: Colors.grey[400]!),
                           )),
                     )
                   ],

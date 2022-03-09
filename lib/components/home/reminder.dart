@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:job_search/components/home/reminder_stack.dart';
+import 'package:job_search/theme.dart';
 
 class Reminder extends StatelessWidget {
   final double width;
@@ -18,15 +20,16 @@ class Reminder extends StatelessWidget {
           Container(
             width: width * 0.35,
             height: height * 0.2,
-            decoration: BoxDecoration(
-                border: Border.all(color: Colors.black, width: 2)),
+            child: FittedBox(
+                fit: BoxFit.fitWidth,
+                child: Text(
+                  "Reminder",
+                  style: MyTheme.style.copyWith(color: MyTheme.blackish),
+                )),
+            // decoration: BoxDecoration(
+            //     border: Border.all(color: Colors.black, width: 2)),
           ),
-          Container(
-            width: width,
-            height: height * 0.65,
-            decoration: BoxDecoration(
-                border: Border.all(color: Colors.black, width: 2)),
-          )
+          ReminderStack(width: width, height: height * 0.775)
         ],
       ),
     );

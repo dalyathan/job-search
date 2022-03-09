@@ -12,18 +12,19 @@ class SlideIconPainter extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = strokeWidth
       ..color = Colors.white;
+    //top slide
     Offset A = Offset(0, verticalBar * 0.5);
     Offset B = Offset(shortDash, A.dy);
     Offset C = Offset(size.width - longDash, 0);
     Offset D = Offset(C.dx, verticalBar);
     Offset E = Offset(size.width, B.dy);
-
+    //middle slide
     Offset F = Offset(0, (size.height / 3) * 1.5);
     Offset G = Offset(longDash, F.dy - verticalBar * 0.5);
     Offset H = Offset(G.dx, G.dy + verticalBar);
     Offset I = Offset(size.width - shortDash, F.dy);
     Offset J = Offset(size.width, F.dy);
-
+    //bottom slide
     Offset K = Offset(0, size.height - verticalBar * 0.5);
     Offset L = Offset(shortDash, K.dy);
     Offset M = Offset(size.width - longDash, size.height - verticalBar);
