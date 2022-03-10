@@ -1,28 +1,68 @@
 import 'package:flutter/material.dart';
 import 'package:job_search/theme.dart';
 
-class ReminderCard extends StatelessWidget {
-  final double width;
-  final double opacity;
-  final double height;
-  const ReminderCard(
-      {Key? key,
-      required this.width,
-      required this.opacity,
-      required this.height})
-      : super(key: key);
+import '../../models/reminder_card_props.dart';
+
+class ReminderCard extends StatefulWidget {
+  final ReminderCardProps props;
+  final VoidCallback? onSwipeRightEnd;
+  final double contaierWidth;
+  const ReminderCard({
+    Key? key,
+    required this.props,
+    required this.onSwipeRightEnd,
+    required this.contaierWidth,
+  }) : super(key: key);
+
+  @override
+  State<ReminderCard> createState() => _ReminderCardState();
+}
+
+class _ReminderCardState extends State<ReminderCard> {
+  bool isSwipeRight = false;
+  late Duration animationsDuration;
+  late double currentLeft;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    animationsDuration = const Duration(milliseconds: 350);
+    currentLeft = (widget.contaierWidth - widget.props.width) * 0.5;
+  }
 
   @override
   Widget build(BuildContext context) {
-    assert(opacity <= 1);
-    // double aspectRatio = 2.25;
-    // double height = width / aspectRatio;
-    return Container(
-      width: width,
-      height: height,
-      decoration: BoxDecoration(
-          color: MyTheme.greenish.withOpacity(opacity),
-          borderRadius: BorderRadius.circular(height * 0.2)),
+    assert(widget.props.opacity <= 1);
+    return AnimatedPositioned(
+      top: widget.props.top,
+      left: currentLeft,
+      onEnd: widget.onSwipeRightEnd,
+      duration: animationsDuration,
+      child: GestureDetector(
+        onPanUpdate: (details) {
+          if (details.delta.dx > 0 && isSwipeRight == false) {
+            setState(() {
+              isSwipeRight = true;
+            });
+          }
+        },
+        onPanEnd: (details) {
+          if (isSwipeRight) {
+            setState(() {
+              currentLeft = widget.contaierWidth;
+            });
+          }
+        },
+        child: AnimatedContainer(
+          duration: animationsDuration,
+          width: widget.props.width,
+          height: widget.props.height,
+          decoration: BoxDecoration(
+              color: MyTheme.greenish.withOpacity(widget.props.opacity),
+              borderRadius: BorderRadius.circular(widget.props.height * 0.2)),
+        ),
+      ),
     );
   }
 }

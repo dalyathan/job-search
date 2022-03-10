@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:job_search/models/reminder_card_props.dart';
 
 import 'reminder_card.dart';
 
@@ -13,20 +14,65 @@ class ReminderStack extends StatefulWidget {
 }
 
 class _ReminderStackState extends State<ReminderStack> {
-  late double lastCardLeftOffset;
   bool isSwipeRight = false;
-  late double lastCardStartOffset;
-  late double gapBetweenCards;
-  late double lastCardTopOffset;
+  late List<double> topOffsetStartValues;
+  // late List<double> leftOffsetStartValues;
+  // late List<double> widthStartValues;
+  // late List<double> opacityStartValues;
+  late List<ReminderCardProps> propsList;
+  // late List<double> heightValues;
+  late ReminderCardProps lastCardProps;
+  late ReminderCardProps middleCardProps;
+  late ReminderCardProps frontCardProps;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    lastCardStartOffset = widget.width * (1 - 0.9) * 0.5;
-    lastCardLeftOffset = lastCardStartOffset;
-    gapBetweenCards = widget.height * 0.075;
-    lastCardTopOffset = 2 * gapBetweenCards;
+    double gapBetweenCards = widget.height * 0.075;
+    topOffsetStartValues = [0, gapBetweenCards, 2 * gapBetweenCards];
+    List<double> widthStartValues = [
+      widget.width * 0.8,
+      widget.width * 0.9,
+      widget.width
+    ];
+    // List<double> leftOffsetStartValues = [
+    //   (widget.width - widthStartValues[0]) * 0.5,
+    //   (widget.width - widthStartValues[1]) * 0.5,
+    //   (widget.width - widthStartValues[2]) * 0.5
+    // ];
+    List<double> opacityStartValues = [0.4, 0.6, 1];
+    List<double> heightValues = [
+      widget.height * 0.7,
+      widget.height * 0.775,
+      widget.height * 0.85
+    ];
+    propsList = [
+      ReminderCardProps(
+        widthStartValues[0],
+        heightValues[0],
+        opacityStartValues[0],
+        topOffsetStartValues[0],
+        // leftOffsetStartValues[0],
+      ),
+      ReminderCardProps(
+        widthStartValues[1],
+        heightValues[1],
+        opacityStartValues[1],
+        topOffsetStartValues[1],
+        // leftOffsetStartValues[1],
+      ),
+      ReminderCardProps(
+        widthStartValues[2],
+        heightValues[2],
+        opacityStartValues[2],
+        topOffsetStartValues[2],
+        // leftOffsetStartValues[2],
+      )
+    ];
+    lastCardProps = propsList[0];
+    middleCardProps = propsList[1];
+    frontCardProps = propsList[2];
   }
 
   @override
@@ -38,53 +84,25 @@ class _ReminderStackState extends State<ReminderStack> {
       child: Stack(
         alignment: Alignment.topCenter,
         children: [
-          AnimatedPositioned(
-            duration: const Duration(milliseconds: 350),
-            child: ReminderCard(
-              width: widget.width * 0.7,
-              opacity: 0.4,
-              height: widget.height * 0.7,
-            ),
+          ReminderCard(
+            props: lastCardProps,
+            onSwipeRightEnd: null,
+            contaierWidth: widget.width,
           ),
-          AnimatedPositioned(
-            top: gapBetweenCards,
-            duration: const Duration(milliseconds: 350),
-            child: ReminderCard(
-              width: widget.width * 0.8,
-              opacity: 0.6,
-              height: widget.height * 0.775,
-            ),
-          ),
-          AnimatedPositioned(
-            top: lastCardTopOffset,
-            left: lastCardLeftOffset,
-            duration: const Duration(milliseconds: 350),
-            onEnd: () => setState(() {
-              isSwipeRight = false;
-              lastCardLeftOffset = lastCardStartOffset;
-              lastCardTopOffset = gapBetweenCards;
+          ReminderCard(
+            props: middleCardProps,
+            onSwipeRightEnd: () => setState(() {
+              lastCardProps = propsList[2];
             }),
-            child: GestureDetector(
-              onPanUpdate: (details) {
-                if (details.delta.dx > 0 && isSwipeRight == false) {
-                  setState(() {
-                    isSwipeRight = true;
-                  });
-                }
-              },
-              onPanEnd: (details) {
-                if (isSwipeRight) {
-                  setState(() {
-                    lastCardLeftOffset = widget.width;
-                  });
-                }
-              },
-              child: ReminderCard(
-                width: widget.width * 0.9,
-                opacity: 1,
-                height: widget.height * 0.85,
-              ),
-            ),
+            contaierWidth: widget.width,
+          ),
+          ReminderCard(
+            props: frontCardProps,
+            onSwipeRightEnd: () => setState(() {
+              middleCardProps = propsList[2];
+              lastCardProps = propsList[1];
+            }),
+            contaierWidth: widget.width,
           )
         ],
       ),
