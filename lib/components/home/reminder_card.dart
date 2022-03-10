@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:job_search/theme.dart';
 
-class ReminderPanel extends StatelessWidget {
+class ReminderCard extends StatelessWidget {
   final double width;
   final double opacity;
   final double height;
-  const ReminderPanel(
+  const ReminderCard(
       {Key? key,
       required this.width,
       required this.opacity,
