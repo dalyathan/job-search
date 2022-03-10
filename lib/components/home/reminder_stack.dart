@@ -24,6 +24,7 @@ class _ReminderStackState extends State<ReminderStack> {
   late ReminderCardProps lastCardProps;
   late ReminderCardProps middleCardProps;
   late ReminderCardProps frontCardProps;
+  late double gapBetweenCards;
 
   @override
   void initState() {

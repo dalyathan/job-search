@@ -19,7 +19,7 @@ class ReminderCard extends StatefulWidget {
 }
 
 class _ReminderCardState extends State<ReminderCard> {
-  bool isSwipeRight = false;
+  bool swipeRightAlreadyDetected = false;
   late Duration animationsDuration;
   late double currentLeft;
 
@@ -36,19 +36,25 @@ class _ReminderCardState extends State<ReminderCard> {
     assert(widget.props.opacity <= 1);
     return AnimatedPositioned(
       top: widget.props.top,
-      left: currentLeft,
-      onEnd: widget.onSwipeRightEnd,
+      left: swipeRightAlreadyDetected
+          ? currentLeft
+          : (widget.contaierWidth - widget.props.width) * 0.5,
+      onEnd: () {
+        if (swipeRightAlreadyDetected && widget.onSwipeRightEnd != null) {
+          widget.onSwipeRightEnd!();
+        }
+      },
       duration: animationsDuration,
       child: GestureDetector(
         onPanUpdate: (details) {
-          if (details.delta.dx > 0 && isSwipeRight == false) {
+          if (details.delta.dx > 0 && swipeRightAlreadyDetected == false) {
             setState(() {
-              isSwipeRight = true;
+              swipeRightAlreadyDetected = true;
             });
           }
         },
         onPanEnd: (details) {
-          if (isSwipeRight) {
+          if (swipeRightAlreadyDetected) {
             setState(() {
               currentLeft = widget.contaierWidth;
             });
