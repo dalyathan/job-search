@@ -86,21 +86,31 @@ class _ReminderStackState extends State<ReminderStack> {
         alignment: Alignment.topCenter,
         children: [
           ReminderCard(
+            key: const Key('0'),
             props: lastCardProps,
-            onSwipeRightEnd: null,
+            onSwipeRightEnd: () => setState(() {
+              lastCardProps = propsList[0];
+              middleCardProps = propsList[1];
+              frontCardProps = propsList[2];
+            }),
             contaierWidth: widget.width,
             backProps: propsList[0],
+            detectEvent: true,
           ),
           ReminderCard(
+            key: const Key('1'),
             props: middleCardProps,
             onSwipeRightEnd: () => setState(() {
               lastCardProps = propsList[2];
               middleCardProps = propsList[0];
+              frontCardProps = propsList[1];
             }),
             contaierWidth: widget.width,
             backProps: propsList[0],
+            detectEvent: true,
           ),
           ReminderCard(
+            key: const Key('2'),
             props: frontCardProps,
             onSwipeRightEnd: () => setState(() {
               middleCardProps = propsList[2];
@@ -109,6 +119,7 @@ class _ReminderStackState extends State<ReminderStack> {
             }),
             contaierWidth: widget.width,
             backProps: propsList[0],
+            detectEvent: frontCardProps == propsList[2],
           )
         ],
       ),

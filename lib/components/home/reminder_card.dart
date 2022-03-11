@@ -8,12 +8,14 @@ class ReminderCard extends StatefulWidget {
   final VoidCallback? onSwipeRightEnd;
   final double contaierWidth;
   final ReminderCardProps backProps;
+  final bool detectEvent;
   const ReminderCard({
     Key? key,
     required this.props,
     required this.onSwipeRightEnd,
     required this.contaierWidth,
     required this.backProps,
+    required this.detectEvent,
   }) : super(key: key);
 
   @override
@@ -39,6 +41,7 @@ class _ReminderCardState extends State<ReminderCard> {
   Widget build(BuildContext context) {
     assert(widget.props.opacity <= 1);
     return AnimatedPositioned(
+      key: widget.key,
       top: widget.props.top,
       left: swipeRightAlreadyDetected
           ? currentLeft
@@ -54,7 +57,9 @@ class _ReminderCardState extends State<ReminderCard> {
       duration: animationsDuration,
       child: GestureDetector(
         onPanUpdate: (details) {
-          if (details.delta.dx > 0 && swipeRightAlreadyDetected == false) {
+          if (details.delta.dx > 0 &&
+              swipeRightAlreadyDetected == false &&
+              widget.detectEvent) {
             setState(() {
               swipeRightAlreadyDetected = true;
             });
@@ -71,6 +76,11 @@ class _ReminderCardState extends State<ReminderCard> {
           duration: animationsDuration,
           width: widget.props.width,
           height: widget.props.height,
+          child: Center(
+              child: Text(
+            widget.key.toString(),
+            style: const TextStyle(color: Colors.white),
+          )),
           decoration: BoxDecoration(
               color: MyTheme.greenish.withOpacity(widget.props.opacity),
               borderRadius: BorderRadius.circular(widget.props.height * 0.2)),
