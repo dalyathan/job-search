@@ -13,6 +13,8 @@ class SearchJob extends StatelessWidget {
   Widget build(BuildContext context) {
     double searchBarHeight = height * 0.575;
     double searchContentHeight = searchBarHeight * 0.95;
+    BorderRadius borderRadius =
+        BorderRadius.circular(searchContentHeight * 0.2);
     return SizedBox(
       width: width,
       height: height,
@@ -41,6 +43,7 @@ class SearchJob extends StatelessWidget {
                   SearchField(
                     width: width * 0.775,
                     height: searchContentHeight,
+                    borderRadius: borderRadius,
                   ),
                   Container(
                     width: searchContentHeight,
@@ -52,8 +55,7 @@ class SearchJob extends StatelessWidget {
                     ),
                     decoration: BoxDecoration(
                       color: MyTheme.greenish,
-                      borderRadius:
-                          BorderRadius.circular(searchContentHeight * 0.1),
+                      borderRadius: borderRadius,
                       boxShadow: [
                         BoxShadow(
                           color: Colors.grey.withOpacity(0.05),

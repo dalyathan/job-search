@@ -89,21 +89,26 @@ class _ReminderStackState extends State<ReminderStack> {
             props: lastCardProps,
             onSwipeRightEnd: null,
             contaierWidth: widget.width,
+            backProps: propsList[0],
           ),
           ReminderCard(
             props: middleCardProps,
             onSwipeRightEnd: () => setState(() {
               lastCardProps = propsList[2];
+              middleCardProps = propsList[0];
             }),
             contaierWidth: widget.width,
+            backProps: propsList[0],
           ),
           ReminderCard(
             props: frontCardProps,
             onSwipeRightEnd: () => setState(() {
               middleCardProps = propsList[2];
               lastCardProps = propsList[1];
+              frontCardProps = propsList[0];
             }),
             contaierWidth: widget.width,
+            backProps: propsList[0],
           )
         ],
       ),

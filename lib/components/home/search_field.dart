@@ -6,7 +6,12 @@ import '../../icons/search.dart';
 class SearchField extends StatefulWidget {
   final double width;
   final double height;
-  const SearchField({Key? key, required this.width, required this.height})
+  final BorderRadius borderRadius;
+  const SearchField(
+      {Key? key,
+      required this.width,
+      required this.height,
+      required this.borderRadius})
       : super(key: key);
 
   @override
@@ -75,7 +80,7 @@ class _SearchFieldState extends State<SearchField> {
         ),
       ),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(widget.height * 0.1),
+        borderRadius: widget.borderRadius,
         color: Colors.white,
         boxShadow: [
           BoxShadow(

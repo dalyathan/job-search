@@ -7,11 +7,13 @@ class ReminderCard extends StatefulWidget {
   final ReminderCardProps props;
   final VoidCallback? onSwipeRightEnd;
   final double contaierWidth;
+  final ReminderCardProps backProps;
   const ReminderCard({
     Key? key,
     required this.props,
     required this.onSwipeRightEnd,
     required this.contaierWidth,
+    required this.backProps,
   }) : super(key: key);
 
   @override
@@ -22,6 +24,7 @@ class _ReminderCardState extends State<ReminderCard> {
   bool swipeRightAlreadyDetected = false;
   late Duration animationsDuration;
   late double currentLeft;
+  //late ReminderCardProps currentProps;
 
   @override
   void initState() {
@@ -29,6 +32,7 @@ class _ReminderCardState extends State<ReminderCard> {
     super.initState();
     animationsDuration = const Duration(milliseconds: 350);
     currentLeft = (widget.contaierWidth - widget.props.width) * 0.5;
+    //currentProps = widget.props;
   }
 
   @override
@@ -42,6 +46,9 @@ class _ReminderCardState extends State<ReminderCard> {
       onEnd: () {
         if (swipeRightAlreadyDetected && widget.onSwipeRightEnd != null) {
           widget.onSwipeRightEnd!();
+          setState(() {
+            swipeRightAlreadyDetected = false;
+          });
         }
       },
       duration: animationsDuration,

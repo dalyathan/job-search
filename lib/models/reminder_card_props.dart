@@ -1,8 +1,8 @@
 class ReminderCardProps {
-  final double width;
-  final double height;
-  final double opacity;
-  final double top;
+  double width;
+  double height;
+  double opacity;
+  double top;
   //final double left;
 
   ReminderCardProps(
