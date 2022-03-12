@@ -21,10 +21,12 @@ class _ReminderStackState extends State<ReminderStack> {
   // late List<double> opacityStartValues;
   late List<ReminderCardProps> propsList;
   // late List<double> heightValues;
-  late ReminderCardProps lastCardProps;
-  late ReminderCardProps middleCardProps;
-  late ReminderCardProps frontCardProps;
+  late ReminderCardProps card0Props;
+  late ReminderCardProps card1Props;
+  late ReminderCardProps card2Props;
   late double gapBetweenCards;
+  int currentCard = -1;
+  int nextCard = 2;
 
   @override
   void initState() {
@@ -71,9 +73,9 @@ class _ReminderStackState extends State<ReminderStack> {
         // leftOffsetStartValues[2],
       )
     ];
-    lastCardProps = propsList[0];
-    middleCardProps = propsList[1];
-    frontCardProps = propsList[2];
+    card0Props = propsList[0];
+    card1Props = propsList[1];
+    card2Props = propsList[2];
   }
 
   @override
@@ -82,46 +84,82 @@ class _ReminderStackState extends State<ReminderStack> {
     return SizedBox(
       height: widget.height,
       width: widget.width,
-      child: Stack(
-        alignment: Alignment.topCenter,
-        children: [
-          ReminderCard(
-            key: const Key('0'),
-            props: lastCardProps,
-            onSwipeRightEnd: () => setState(() {
-              lastCardProps = propsList[0];
-              middleCardProps = propsList[1];
-              frontCardProps = propsList[2];
-            }),
-            contaierWidth: widget.width,
-            backProps: propsList[0],
-            detectEvent: true,
-          ),
-          ReminderCard(
-            key: const Key('1'),
-            props: middleCardProps,
-            onSwipeRightEnd: () => setState(() {
-              lastCardProps = propsList[2];
-              middleCardProps = propsList[0];
-              frontCardProps = propsList[1];
-            }),
-            contaierWidth: widget.width,
-            backProps: propsList[0],
-            detectEvent: true,
-          ),
-          ReminderCard(
-            key: const Key('2'),
-            props: frontCardProps,
-            onSwipeRightEnd: () => setState(() {
-              middleCardProps = propsList[2];
-              lastCardProps = propsList[1];
-              frontCardProps = propsList[0];
-            }),
-            contaierWidth: widget.width,
-            backProps: propsList[0],
-            detectEvent: frontCardProps == propsList[2],
-          )
-        ],
+      child: GestureDetector(
+        onPanUpdate: (details) {
+          if (details.delta.dx > 0 &&
+              isSwipeRight == false &&
+              currentCard == -1) {
+            setState(() {
+              isSwipeRight = true;
+            });
+          }
+        },
+        onPanEnd: (details) {
+          if (isSwipeRight) {
+            setState(() {
+              currentCard = nextCard;
+            });
+          }
+        },
+        child: Stack(
+          alignment: Alignment.topCenter,
+          children: [
+            ReminderCard(
+              key: const Key('0'),
+              props: card0Props,
+              onSwipeRightEnd: currentCard == 0
+                  ? () => setState(() {
+                        nextCard = 2;
+                        currentCard = -1;
+                        isSwipeRight = false;
+                        card0Props = propsList[0];
+                        card1Props = propsList[1];
+                        card2Props = propsList[2];
+                      })
+                  : null,
+              contaierWidth: widget.width,
+              leftOffset: currentCard == 0
+                  ? widget.width
+                  : ((widget.width - card0Props.width) * 0.5),
+            ),
+            ReminderCard(
+              key: const Key('1'),
+              props: card1Props,
+              onSwipeRightEnd: currentCard == 1
+                  ? () => setState(() {
+                        nextCard = 0;
+                        currentCard = -1;
+                        isSwipeRight = false;
+                        card0Props = propsList[2];
+                        card1Props = propsList[0];
+                        card2Props = propsList[1];
+                      })
+                  : null,
+              contaierWidth: widget.width,
+              leftOffset: currentCard == 1
+                  ? widget.width
+                  : ((widget.width - card1Props.width) * 0.5),
+            ),
+            ReminderCard(
+              key: const Key('2'),
+              props: card2Props,
+              onSwipeRightEnd: currentCard == 2
+                  ? () => setState(() {
+                        nextCard = 1;
+                        currentCard = -1;
+                        isSwipeRight = false;
+                        card1Props = propsList[2];
+                        card0Props = propsList[1];
+                        card2Props = propsList[0];
+                      })
+                  : null,
+              contaierWidth: widget.width,
+              leftOffset: currentCard == 2
+                  ? widget.width
+                  : ((widget.width - card2Props.width) * 0.5),
+            )
+          ],
+        ),
       ),
     );
   }
