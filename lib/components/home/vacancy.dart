@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:job_search/icons/save.dart';
+import 'package:job_search/theme.dart';
 
 class Vacancy extends StatelessWidget {
   final double width;
@@ -15,6 +17,18 @@ class Vacancy extends StatelessWidget {
       child: Container(
         width: width,
         height: height,
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Column(
+                  children: [],
+                ),
+                SaveIcon(isSaved: false, size: width * 0.175)
+              ],
+            )
+          ],
+        ),
         decoration: BoxDecoration(
             borderRadius: borderRadius,
             border: Border.all(color: Colors.black, width: 2)),

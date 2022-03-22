@@ -29,7 +29,10 @@ class Reminder extends StatelessWidget {
             // decoration: BoxDecoration(
             //     border: Border.all(color: Colors.black, width: 2)),
           ),
-          ReminderStack(width: width, height: height * 0.775)
+          ReminderStack(
+            width: width,
+            height: height * 0.775,
+          )
         ],
       ),
     );
