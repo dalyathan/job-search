@@ -57,6 +57,7 @@ class _ReminderCardState extends State<ReminderCard> {
         onEnd: () {
           if (widget.onSwipeRightEnd != null) {
             widget.onSwipeRightEnd!();
+            dispose();
           }
         },
         duration: animationsDuration,
