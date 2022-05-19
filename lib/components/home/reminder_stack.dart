@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:job_search/models/reminder_card_props.dart';
 
@@ -6,11 +8,13 @@ import 'reminder_card.dart';
 class ReminderStack extends StatefulWidget {
   final double width;
   final double height;
-  const ReminderStack({
-    Key? key,
-    required this.width,
-    required this.height,
-  }) : super(key: key);
+  final List<Widget> contents;
+  const ReminderStack(
+      {Key? key,
+      required this.width,
+      required this.height,
+      required this.contents})
+      : super(key: key);
 
   @override
   State<ReminderStack> createState() => _ReminderStackState();
@@ -46,18 +50,18 @@ class _ReminderStackState extends State<ReminderStack> {
     windowEnd = numberOfCards - 1;
     windowStart = windowEnd - windowSize + 1;
     nextCard = numberOfCards - 1;
-    double gapBetweenCards =
-        (widget.height - heightValues[heightValues.length - 1]) /
-            (numberOfCards - 1);
+    double maxGap = widget.height - heightValues[7];
+    // (widget.height - heightValues[heightValues.length - 1]) /
+    //     (numberOfCards - 1);
     topOffsetStartValues = [
-      0,
-      1 * gapBetweenCards,
-      2 * gapBetweenCards,
-      3 * gapBetweenCards,
-      4 * gapBetweenCards,
-      5 * gapBetweenCards,
-      6 * gapBetweenCards,
-      7 * gapBetweenCards
+      -0.75 * maxGap,
+      -0.5 * maxGap,
+      -0.25 * maxGap,
+      0 * maxGap,
+      0.25 * maxGap,
+      0.5 * maxGap,
+      0.75 * maxGap,
+      maxGap,
     ];
     List<double> widthStartValues = [
       widget.width * 0.65,
@@ -128,6 +132,8 @@ class _ReminderStackState extends State<ReminderStack> {
   @override
   Widget build(BuildContext context) {
     var subList = propsStateList.sublist(windowStart, windowEnd + 1);
+    var rotationAngle = Matrix4.identity();
+    rotationAngle.rotateX(pi / 4);
     return SizedBox(
       height: widget.height,
       width: widget.width,

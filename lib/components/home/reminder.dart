@@ -32,6 +32,7 @@ class Reminder extends StatelessWidget {
           ReminderStack(
             width: width,
             height: height * 0.775,
+            contents: [],
           )
         ],
       ),
