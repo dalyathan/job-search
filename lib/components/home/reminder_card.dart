@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:job_search/theme.dart';
+import 'dart:math' as math;
 
 import '../../models/reminder_card_props.dart';
 
@@ -26,13 +27,15 @@ class ReminderCard extends StatefulWidget {
 
 class _ReminderCardState extends State<ReminderCard> {
   final Duration animationsDuration = const Duration(milliseconds: 350);
-  bool isInTransition = false;
+  late Color myColor;
   late double leftOffset;
 
   @override
   void initState() {
     super.initState();
     leftOffset = (widget.contaierWidth - widget.props.width) * 0.5;
+    myColor =
+        Color((math.Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0);
   }
 
   @override
@@ -47,19 +50,20 @@ class _ReminderCardState extends State<ReminderCard> {
 
   @override
   Widget build(BuildContext context) {
-    assert(widget.props.opacity <= 1);
-    return Visibility(
-      visible: isInTransition ? false : true,
-      child: AnimatedPositioned(
-        key: widget.key,
-        top: widget.props.top,
-        left: leftOffset,
-        onEnd: () {
-          if (widget.onSwipeRightEnd != null) {
-            widget.onSwipeRightEnd!();
-            dispose();
-          }
-        },
+    // assert(widget.props.opacity <= 1);
+    return AnimatedPositioned(
+      key: widget.key,
+      top: widget.props.top,
+      left: leftOffset,
+      onEnd: () {
+        if (widget.onSwipeRightEnd != null) {
+          widget.onSwipeRightEnd!();
+          dispose();
+        }
+      },
+      duration: animationsDuration,
+      child: AnimatedOpacity(
+        opacity: widget.props.opacity,
         duration: animationsDuration,
         child: AnimatedContainer(
           duration: animationsDuration,
@@ -70,7 +74,7 @@ class _ReminderCardState extends State<ReminderCard> {
             child: Center(child: widget.content),
           ),
           decoration: BoxDecoration(
-              color: MyTheme.greenish.withOpacity(widget.props.opacity),
+              color: myColor, //.withOpacity(widget.props.opacity),
               borderRadius: BorderRadius.circular(widget.props.height * 0.2)),
         ),
       ),
