@@ -51,33 +51,36 @@ class _ReminderCardState extends State<ReminderCard> {
   @override
   Widget build(BuildContext context) {
     // assert(widget.props.opacity <= 1);
-    return AnimatedPositioned(
-      key: widget.key,
-      top: widget.props.top,
-      left: leftOffset,
-      onEnd: () {
-        if (widget.onSwipeRightEnd != null) {
-          widget.onSwipeRightEnd!();
-          dispose();
-        }
-      },
-      duration: animationsDuration,
-      child: AnimatedOpacity(
-        opacity: widget.props.opacity,
-        duration: animationsDuration,
-        child: AnimatedContainer(
-          duration: animationsDuration,
-          width: widget.props.width,
-          height: widget.props.height,
-          child: Visibility(
-            visible: widget.showContent,
-            child: Center(child: widget.content),
-          ),
-          decoration: BoxDecoration(
-              color: myColor, //.withOpacity(widget.props.opacity),
-              borderRadius: BorderRadius.circular(widget.props.height * 0.2)),
-        ),
-      ),
-    );
+    return widget.props.top >= 0
+        ? AnimatedPositioned(
+            key: widget.key,
+            top: widget.props.top,
+            left: leftOffset,
+            onEnd: () {
+              if (widget.onSwipeRightEnd != null) {
+                widget.onSwipeRightEnd!();
+                dispose();
+              }
+            },
+            duration: animationsDuration,
+            child: AnimatedOpacity(
+              opacity: widget.props.opacity,
+              duration: animationsDuration,
+              child: AnimatedContainer(
+                duration: animationsDuration,
+                width: widget.props.width,
+                height: widget.props.height,
+                child: Visibility(
+                  visible: widget.showContent,
+                  child: Center(child: widget.content),
+                ),
+                decoration: BoxDecoration(
+                    color: myColor, //.withOpacity(widget.props.opacity),
+                    borderRadius:
+                        BorderRadius.circular(widget.props.height * 0.2)),
+              ),
+            ),
+          )
+        : Container();
   }
 }

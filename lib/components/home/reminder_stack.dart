@@ -39,7 +39,7 @@ class _ReminderStackState extends State<ReminderStack> {
   @override
   void initState() {
     super.initState();
-    numberOfCards = 2;
+    numberOfCards = 0;
     List<double> heightValues = getThisAmountIncludingBetween(
         minHeightRatio, maxHeightRatio, numberOfCards, widget.height);
     nextCard = numberOfCards - 1;
@@ -51,9 +51,10 @@ class _ReminderStackState extends State<ReminderStack> {
     List<double> opacityStartValues =
         getThisAmountIncludingBetween(minOpacity, maxOpacity, numberOfCards, 1);
     propsValueList = [];
-    for (int index = 0; index < numberOfCards; index++) {
+    for (double width in widthStartValues) {
+      int index = widthStartValues.indexOf(width);
       propsStateList.add(ReminderCardProps(
-        widthStartValues[index],
+        width,
         heightValues[index],
         opacityStartValues[index],
         topOffsetStartValues[index],
@@ -137,7 +138,7 @@ class _ReminderStackState extends State<ReminderStack> {
     double step = gap / (amount - 1);
     List<double> values = [min];
     double prev = min;
-    while (prev < max) {
+    while (prev >= min && prev < max) {
       prev = prev + step;
       values.add(prev * multiplyer);
     }
