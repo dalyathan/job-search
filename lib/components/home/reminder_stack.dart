@@ -37,7 +37,7 @@ class _ReminderStackState extends State<ReminderStack> {
   @override
   void initState() {
     super.initState();
-    numberOfCards = 10;
+    numberOfCards = 3;
     List<double> heightValues = getThisAmountIncludingBetween(
         minHeightRatio, maxHeightRatio, numberOfCards + 1, widget.height);
     nextCard = numberOfCards;
@@ -135,10 +135,11 @@ class _ReminderStackState extends State<ReminderStack> {
     double step = gap / (amount - 1);
     List<double> values = [max * multiplyer];
     double prev = max;
+    // values.reversed;
     while (values.length < amount) {
       prev = prev - step;
-      values.insert(0, prev * multiplyer);
+      values.add(prev * multiplyer);
     }
-    return values;
+    return List<double>.from(values.reversed);
   }
 }
