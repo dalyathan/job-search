@@ -22,8 +22,6 @@ class ReminderStack extends StatefulWidget {
 
 class _ReminderStackState extends State<ReminderStack> {
   bool isSwipeRight = false;
-  late List<double> topOffsetStartValues;
-  late List<ReminderCardProps> propsValueList;
   List<ReminderCardProps> propsStateList = [];
   late double gapBetweenCards;
   int currentCard = -1;
@@ -39,18 +37,17 @@ class _ReminderStackState extends State<ReminderStack> {
   @override
   void initState() {
     super.initState();
-    numberOfCards = 0;
+    numberOfCards = 10;
     List<double> heightValues = getThisAmountIncludingBetween(
-        minHeightRatio, maxHeightRatio, numberOfCards, widget.height);
-    nextCard = numberOfCards - 1;
+        minHeightRatio, maxHeightRatio, numberOfCards + 1, widget.height);
+    nextCard = numberOfCards;
     double maxGap = widget.height - heightValues.last;
-    topOffsetStartValues =
-        getThisAmountIncludingBetween(-1, 1, numberOfCards, maxGap);
+    List<double> topOffsetStartValues =
+        getThisAmountIncludingBetween(-1, 1, numberOfCards + 1, maxGap);
     List<double> widthStartValues = getThisAmountIncludingBetween(
-        minWidthRatio, maxWidthRatio, numberOfCards, widget.width);
-    List<double> opacityStartValues =
-        getThisAmountIncludingBetween(minOpacity, maxOpacity, numberOfCards, 1);
-    propsValueList = [];
+        minWidthRatio, maxWidthRatio, numberOfCards + 1, widget.width);
+    List<double> opacityStartValues = getThisAmountIncludingBetween(
+        minOpacity, maxOpacity, numberOfCards + 1, 1);
     for (double width in widthStartValues) {
       int index = widthStartValues.indexOf(width);
       propsStateList.add(ReminderCardProps(
@@ -136,11 +133,11 @@ class _ReminderStackState extends State<ReminderStack> {
       double min, double max, int amount, double multiplyer) {
     double gap = max - min;
     double step = gap / (amount - 1);
-    List<double> values = [min];
-    double prev = min;
-    while (prev >= min && prev < max) {
-      prev = prev + step;
-      values.add(prev * multiplyer);
+    List<double> values = [max * multiplyer];
+    double prev = max;
+    while (values.length < amount) {
+      prev = prev - step;
+      values.insert(0, prev * multiplyer);
     }
     return values;
   }
