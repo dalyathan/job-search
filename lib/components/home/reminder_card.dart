@@ -27,6 +27,7 @@ class ReminderCard extends StatefulWidget {
 
 class _ReminderCardState extends State<ReminderCard> {
   final Duration animationsDuration = const Duration(milliseconds: 350);
+  final Curve animationCurve = Curves.easeOut;
   late Color myColor;
   late double leftOffset;
 
@@ -56,6 +57,7 @@ class _ReminderCardState extends State<ReminderCard> {
             key: widget.key,
             top: widget.props.top,
             left: leftOffset,
+            curve: animationCurve,
             onEnd: () {
               if (widget.onSwipeRightEnd != null) {
                 widget.onSwipeRightEnd!();
@@ -63,22 +65,19 @@ class _ReminderCardState extends State<ReminderCard> {
               }
             },
             duration: animationsDuration,
-            child: AnimatedOpacity(
-              opacity: widget.props.opacity,
+            child: AnimatedContainer(
               duration: animationsDuration,
-              child: AnimatedContainer(
-                duration: animationsDuration,
-                width: widget.props.width,
-                height: widget.props.height,
-                child: Visibility(
-                  visible: widget.showContent,
-                  child: Center(child: widget.content),
-                ),
-                decoration: BoxDecoration(
-                    color: myColor, //.withOpacity(widget.props.opacity),
-                    borderRadius:
-                        BorderRadius.circular(widget.props.height * 0.2)),
+              width: widget.props.width,
+              height: widget.props.height,
+              curve: Curves.linear,
+              child: Visibility(
+                visible: widget.showContent,
+                child: Center(child: widget.content),
               ),
+              decoration: BoxDecoration(
+                  color: myColor, //.withOpacity(widget.props.opacity),
+                  borderRadius:
+                      BorderRadius.circular(widget.props.height * 0.2)),
             ),
           )
         : Container();

@@ -37,7 +37,7 @@ class _ReminderStackState extends State<ReminderStack> {
   @override
   void initState() {
     super.initState();
-    numberOfCards = 3;
+    numberOfCards = 10;
     List<double> heightValues = getThisAmountIncludingBetween(
         minHeightRatio, maxHeightRatio, numberOfCards + 1, widget.height);
     nextCard = numberOfCards;
